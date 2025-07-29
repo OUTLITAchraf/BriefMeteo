@@ -20,9 +20,11 @@
           type="text"
           placeholder="Search by city..."
           class="py-3 pl-5 w-70 rounded-4xl bg-white focus:outline-none focus:ring-2"
+          id="city-input"
         />
         <button
           class="flex items-center gap-2 bg-[#FFD700] text-white text-lg font-semibold py-3 px-4 cursor-pointer rounded-3xl"
+          id="search-button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +45,7 @@
         </button>
         <button
           class="flex items-center gap-2 bg-[#FCF8DD] text-lg font-semibold py-3 px-4 cursor-pointer rounded-3xl"
+          id="CurrentLocation-button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -67,12 +70,73 @@
         </button>
       </div>
     </nav>
-    <main>
-     
+    <main class="pb-20">
+      <div class="flex">
+        <div id="todayWeather" class="mx-22">
+          <h1 class="italic font-bold text-6xl text-[#FFD700] mt-12">
+            Meteo ___________, __________
+          </h1>
+          <div class="flex gap-4 mt-8 ml-10">
+            <img src="./Img/icons/cloudy.png" alt="" width="200" height="200" />
+            <div class="ml-5">
+              <p class="text-2xl font-semibold mt-5">_____________ | _____</p>
+              <p class="text-6xl font-extrabold my-5">_____ &deg;C</p>
+              <p class="text-2xl font-bold">__________</p>
+            </div>
+          </div>
+          <div class="flex gap-10 mt-10 ml-10">
+            <div class="flex gap-5 mt-10 mr-5">
+              <img src="./Img/icons/drop.png" alt="" width="70" height="70" />
+              <div>
+                <p class="font-bold text-2xl">Humidity</p>
+                <p class="font-bold text-2xl">__ %</p>
+              </div>
+            </div>
+            <div class="flex gap-5 mt-10">
+              <img
+                src="./Img/icons/compass.png"
+                alt=""
+                width="70"
+                height="70"
+              />
+              <div>
+                <p class="font-bold text-2xl">Pressure</p>
+                <p class="font-bold text-2xl">___ hPA</p>
+              </div>
+            </div>
+            <div class="flex gap-5 mt-10 ml-5">
+              <img src="./Img/icons/wind.png" alt="" width="70" height="70" />
+              <div>
+                <p class="font-bold text-2xl">Wind Speed</p>
+                <p class="font-bold text-2xl">___ m/s</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-10 mt-10 ml-10">
+            <div class="flex gap-5 mt-10 mr-5">
+              <img
+                src="./Img/icons/sunrise.png"
+                alt=""
+                width="70"
+                height="70"
+              />
+              <div>
+                <p class="font-bold text-2xl">Sunrise</p>
+                <p class="font-bold text-2xl">__:__ Am</p>
+              </div>
+            </div>
+            <div class="flex gap-5 mt-10">
+              <img src="./Img/icons/sunset.png" alt="" width="70" height="70" />
+              <div>
+                <p class="font-bold text-2xl">Sunset</p>
+                <p class="font-bold text-2xl">__:__ Pm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-    <!-- <footer class="bg-[#00809D] text-white text-center py-5 my-40">
-      <p>&copy; 2023 Météo. All rights reserved.</p>
-    </footer> -->
+   
     <script src="script.js"></script>
   </body>
 </html>
