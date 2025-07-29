@@ -1,24 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="./src/output.css" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav class="bg-[#00809D] flex items-center justify-between px-20">
-        <img src="./Img/Météo-removebg-preview.png" alt="logo" class="w-25 h-25" />
-        <div class="space-x-5">
-            <input type="text" placeholder="Search by city..." class="py-3 pl-5 w-96 rounded-4xl bg-white focus:outline-none focus:ring-2" />
-            <button class="bg-[#FFD700] text-white text-lg font-semibold py-3 px-5 cursor-pointer rounded-2xl">
-                Searche
-            </button>
-        </div>
+      <img
+        src="./Img/Météo-removebg-preview.png"
+        alt="logo"
+        class="w-25 h-25"
+      />
+      <div class="flex space-x-3">
+        <input
+          type="text"
+          placeholder="Search by city..."
+          class="py-3 pl-5 w-70 rounded-4xl bg-white focus:outline-none focus:ring-2"
+        />
+        <button
+          class="flex items-center gap-2 bg-[#FFD700] text-white text-lg font-semibold py-3 px-4 cursor-pointer rounded-3xl"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-search-icon lucide-search"
+          >
+            <path d="m21 21-4.34-4.34" />
+            <circle cx="11" cy="11" r="8" />
+          </svg>
+          Searche
+        </button>
+        <button
+          class="flex items-center gap-2 bg-[#FCF8DD] text-lg font-semibold py-3 px-4 cursor-pointer rounded-3xl"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-locate-fixed-icon lucide-locate-fixed"
+          >
+            <line x1="2" x2="5" y1="12" y2="12" />
+            <line x1="19" x2="22" y1="12" y2="12" />
+            <line x1="12" x2="12" y1="2" y2="5" />
+            <line x1="12" x2="12" y1="19" y2="22" />
+            <circle cx="12" cy="12" r="7" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+          Current location
+        </button>
+      </div>
     </nav>
-</body>
-
+    <main>
+     
+    </main>
+    <!-- <footer class="bg-[#00809D] text-white text-center py-5 my-40">
+      <p>&copy; 2023 Météo. All rights reserved.</p>
+    </footer> -->
+    <script src="script.js"></script>
+  </body>
 </html>
