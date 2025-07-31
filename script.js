@@ -163,41 +163,47 @@ function getWeatherData(name, lat, lon, country) {
   fetch(FORECAST_API_URL)
     .then((res) => res.json())
     .then((data) => {
-
-      let uniqueForecastsDays = [];
-      let fiveDaysForecast = data.list.filter((forecast) => {
-        let forecaseDate = new Date(forecast.dt_txt).getDate();
-
-        if (!uniqueForecastsDays.includes(forecaseDate)) {
-          return uniqueForecastsDays.push(forecaseDate);
-        }
-      });
-
-      fiveDaysForecastElements.innerHTML = "";
-      for (let i = 1; i < fiveDaysForecast.length; i++) {
-        let forecast = fiveDaysForecast[i];
-
+      let daysMap = {};
+      data.list.forEach((forecast) => {
         let date = new Date(forecast.dt_txt);
 
+        let dayKey = date.toISOString().split("T")[0];
+
+        if (!daysMap[dayKey]) {
+          daysMap[dayKey] = [];
+        }
+        daysMap[dayKey].push(forecast);
+      });
+
+      let allDays = Object.keys(daysMap);
+
+      let nextFiveDays = allDays.slice(1, 6);
+
+      fiveDaysForecastElements.innerHTML = "";
+      nextFiveDays.forEach((dayKey) => {
+        let forecasts = daysMap[dayKey];
+
+        let avgTemp =
+          forecasts.reduce((sum, f) => sum + f.main.temp, 0) / forecasts.length;
+
+        let icon = forecasts[Math.floor(forecasts.length / 2)].weather[0].icon;
+        icon = icon.replace("n", "d");
+
+        let date = new Date(dayKey);
         let dayName = days[date.getDay()];
 
         fiveDaysForecastElements.innerHTML += `
-            <div class="bg-[#00809D] text-white text-center py-5 px-3 rounded-4xl shadow-lg border-black border-2">
-              <p class="font-bold text-3xl">${dayName}</p>
-              <img src="https://openweathermap.org/img/wn/${
-                forecast.weather[0].icon
-              }@2x.png" alt="" width="300" height="300" />
-              <p class="font-bold text-3xl">${(
-                forecast.main.temp - 273.15
-              ).toFixed(2)}&deg;C</p>
-            </div>
-          `;
-      }
+         <div class="bg-[#00809D] text-white text-center py-5 px-3 rounded-4xl shadow-lg border-black border-2">
+            <p class="font-bold text-3xl">${dayName}</p>
+            <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="" width="300" height="300" />
+            <p class="font-bold text-3xl">${(avgTemp - 273.15).toFixed(2)}&deg;C</p>
+        </div>
+      `;
+      });
     })
     .catch(() => {
       alert("Error fetching forecast data. Please try again later.");
     });
-
 }
 
 function getCityCoordinates() {
