@@ -1,12 +1,12 @@
 let searchButton = document.getElementById("search-button");
-let CurrentLocation = document.getElementById("Currentlocation-button");
+let currentLocationButton = document.getElementById("currentlocation-button");
 let cityInput = document.getElementById("city-input");
 let todayWeatherElements = document.querySelector("#todayWeather");
 let fiveDaysForecastElements = document.querySelector("#forecastFiveDays");
 let hoursForecastElements = document.querySelector("#hoursWeather");
 let api_key = "561d905e67fc60afecba2387e4877853";
 
-function getWeatherData(name, lat, lon, country, state) {
+function getWeatherData(name, lat, lon, country) {
   let FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_key}`;
   let WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`;
 
@@ -127,27 +127,29 @@ function getWeatherData(name, lat, lon, country, state) {
     .then((res) => res.json())
     .then((data) => {
       let uniqueForecastsHours = [];
-      let threeHoursForecast = data.list.filter((forecast) => {        
+      let threeHoursForecast = data.list.filter((forecast) => {
         let forecastHour = new Date(forecast.dt_txt).getHours();
         if (!uniqueForecastsHours.includes(forecastHour)) {
           return uniqueForecastsHours.push(forecastHour);
         }
       });
-      
+
       hoursForecastElements.innerHTML = "";
       for (let i = 0; i < threeHoursForecast.length; i++) {
         if (i == 4) {
-                  break
-        }
-        else {
-        
-        let forecast = threeHoursForecast[i];
-        let date = new Date(forecast.dt_txt);
+          break;
+        } else {
+          let forecast = threeHoursForecast[i];
+          let date = new Date(forecast.dt_txt);
 
-        hoursForecastElements.innerHTML += `
+          hoursForecastElements.innerHTML += `
             <div class="flex gap-8 mt-5 items-center">
-              <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" alt="" width="100" height="100" />
-              <p class="text-2xl font-bold">${(forecast.main.temp - 273.15).toFixed(2)} &deg;C</p>
+              <img src="https://openweathermap.org/img/wn/${
+                forecast.weather[0].icon
+              }@2x.png" alt="" width="100" height="100" />
+              <p class="text-2xl font-bold">${(
+                forecast.main.temp - 273.15
+              ).toFixed(2)} &deg;C</p>
               <p class="text-2xl font-bold">${date.getHours()}:00</p>
             </div>
           `;
@@ -164,14 +166,13 @@ function getWeatherData(name, lat, lon, country, state) {
 
       let uniqueForecastsDays = [];
       let fiveDaysForecast = data.list.filter((forecast) => {
-        
         let forecaseDate = new Date(forecast.dt_txt).getDate();
-        
+
         if (!uniqueForecastsDays.includes(forecaseDate)) {
           return uniqueForecastsDays.push(forecaseDate);
         }
       });
-      
+
       fiveDaysForecastElements.innerHTML = "";
       for (let i = 1; i < fiveDaysForecast.length; i++) {
         let forecast = fiveDaysForecast[i];
@@ -196,6 +197,7 @@ function getWeatherData(name, lat, lon, country, state) {
     .catch(() => {
       alert("Error fetching forecast data. Please try again later.");
     });
+
 }
 
 function getCityCoordinates() {
@@ -206,8 +208,8 @@ function getCityCoordinates() {
   fetch(GEOCODING_API_URL)
     .then((res) => res.json())
     .then((data) => {
-      let { name, lat, lon, country, state } = data[0];
-      getWeatherData(name, lat, lon, country, state);
+      let { name, lat, lon, country } = data[0];
+      getWeatherData(name, lat, lon, country);
     })
     .catch(() => {
       alert(
@@ -215,4 +217,23 @@ function getCityCoordinates() {
       );
     });
 }
+
+function getUserCoordinates() {
+  navigator.geolocation.getCurrentPosition((position) => {
+    let { latitude, longitude } = position.coords;
+    let REVERSE_GEOCODING_URL = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${api_key}`;
+
+    fetch(REVERSE_GEOCODING_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        let { name, country } = data[0];
+        getWeatherData(name, latitude, longitude, country);
+      })
+      .catch(() => {
+        alert("Error fetching coordinates of user.");
+      });
+  });
+}
+
 searchButton.addEventListener("click", getCityCoordinates);
+currentLocationButton.addEventListener("click", getUserCoordinates);
