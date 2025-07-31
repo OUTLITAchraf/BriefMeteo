@@ -237,3 +237,4 @@ function getUserCoordinates() {
 
 searchButton.addEventListener("click", getCityCoordinates);
 currentLocationButton.addEventListener("click", getUserCoordinates);
+window.addEventListener("DOMContentLoaded", getUserCoordinates);
