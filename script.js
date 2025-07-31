@@ -196,7 +196,9 @@ function getWeatherData(name, lat, lon, country) {
          <div class="bg-[#00809D] text-white text-center py-5 px-3 rounded-4xl shadow-lg border-black border-2">
             <p class="font-bold text-3xl">${dayName}</p>
             <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="" width="300" height="300" />
-            <p class="font-bold text-3xl">${(avgTemp - 273.15).toFixed(2)}&deg;C</p>
+            <p class="font-bold text-3xl">${(avgTemp - 273.15).toFixed(
+              2
+            )}&deg;C</p>
         </div>
       `;
       });
@@ -214,6 +216,10 @@ function getCityCoordinates() {
   fetch(GEOCODING_API_URL)
     .then((res) => res.json())
     .then((data) => {
+      if (!data[0]) {
+        alert("Could not find city for your location.");
+        return;
+      }
       let { name, lat, lon, country } = data[0];
       getWeatherData(name, lat, lon, country);
     })
@@ -235,7 +241,8 @@ function getUserCoordinates() {
         let { name, country } = data[0];
         getWeatherData(name, latitude, longitude, country);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Reverse geocoding error:", err);
         alert("Error fetching coordinates of user.");
       });
   });
