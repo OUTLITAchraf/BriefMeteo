@@ -165,7 +165,7 @@ function getWeatherData(name, lat, lon, country) {
           hoursForecastElements.innerHTML += `
             <div class="flex gap-8 mt-5 items-center">
               <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@4x.png" alt="" width="100" height="100" />
-              <p class="text-2xl font-bold text-white">${(
+              <p class="text-xl lg:text-2xl font-bold text-white">${(
                 forecast.main.temp - 273.15
               ).toFixed(2)}  &deg;C</p>
               <p class="text-2xl font-bold text-white">${date.getHours()}:00</p>
