@@ -54,7 +54,7 @@ function getWeatherData(name, lat, lon, country) {
             <img
               src="https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png"
               alt=""
-              class="h-[150px] w-[150px] lg:h-[250px] lg:w-[250px]"
+              class="h-[130px] w-[130px] lg:h-[250px] lg:w-[250px]"
             />
             <div class="ml-5 lg:mt-5">
               <p class="text-xl lg:text-2xl font-semibold lg:mt-5 text-white">
@@ -69,7 +69,7 @@ function getWeatherData(name, lat, lon, country) {
               <p class="text-xl lg:text-2xl font-bold text-white">${data.weather[0].description}</p>
             </div>
           </div>
-          <div class="flex gap-8 mx-5 lg:gap-10 mt-5 lg:mt-10 lg:ml-10">
+          <div class="flex gap-8 mx-5 lg:gap-10 lg:mt-10 lg:ml-10">
             <div class="flex gap-3 lg:gap-5 mt-10 lg:mr-5 items-center">
               <img
                 src="./Img/icons/humidity.png"
@@ -100,8 +100,21 @@ function getWeatherData(name, lat, lon, country) {
               </div>
             </div>
           </div>
-          <div class="flex gap-8 mx-5 lg:gap-10 lg:mt-10 lg:ml-10">
-            <div class="flex gap-5 mt-10 mr-5">
+          <div class="flex gap-8 mx-5 lg:gap-10 lg:mt-10 lg:ml-12">
+            <div class="flex gap-2 mt-10 lg:mr-8">
+              <img
+                src="./Img/icons/temperature.png"
+                alt=""
+                class="w-[25px] h-[25px] lg:h-[70px] lg:w-[70px]"
+              />
+              <div>
+                <p class="font-bold text-sm lg:text-2xl text-white">Feel Like</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${(
+                data.main.feels_like - 273.15
+              ).toFixed(2)}  &deg;C</p>
+              </div>
+            </div>
+            <div class="flex gap-5 mt-10 lg:mr-8">
               <img
                 src="./Img/icons/sunrise.png"
                 alt=""
