@@ -422,6 +422,9 @@
   .h-\[120px\] {
     height: 120px;
   }
+  .h-\[130px\] {
+    height: 130px;
+  }
   .h-\[150px\] {
     height: 150px;
   }
@@ -511,6 +514,9 @@
   }
   .w-\[120px\] {
     width: 120px;
+  }
+  .w-\[130px\] {
+    width: 130px;
   }
   .w-\[150px\] {
     width: 150px;
@@ -1183,6 +1189,11 @@
   .lg\:mr-5 {
     @media (width >= 64rem) {
       margin-right: calc(var(--spacing) * 5);
+    }
+  }
+  .lg\:mr-8 {
+    @media (width >= 64rem) {
+      margin-right: calc(var(--spacing) * 8);
     }
   }
   .lg\:mr-10 {
