@@ -5,10 +5,71 @@ let todayWeatherElements = document.querySelector("#todayWeather");
 let fiveDaysForecastElements = document.querySelector("#forecastFiveDays");
 let hoursForecastElements = document.querySelector("#hoursWeather");
 let api_key = "561d905e67fc60afecba2387e4877853";
+let chartInstance = null; 
+
+function displayWeatherChart(data) {
+  const ctx = document.getElementById('weatherChart').getContext('2d');
+
+  // Détruire l’ancien graphique s’il existe
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  const labels = data.list.map(item => {
+    const date = new Date(item.dt_txt);
+    return `${date.getDate()}/${date.getMonth() + 1} ${date.getHours()}:00`;
+  });
+
+  const temperatures = data.list.map(item =>
+    (item.main.temp - 273.15).toFixed(1)
+  );
+
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Température (°C)',
+        data: temperatures,
+        borderColor: 'rgba(255, 206, 86, 1)',
+        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: {
+            color: 'white'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: 'white'
+          }
+        },
+        y: {
+          ticks: {
+            color: 'white'
+          }
+        }
+      }
+    }
+  });
+}
+
 
 function getWeatherData(name, lat, lon, country) {
   let FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_key}`;
   let WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`;
+  let chartInstance = null;
 
   let days = [
     "Sunday",
@@ -52,7 +113,9 @@ function getWeatherData(name, lat, lon, country) {
           </h1>
           <div class="flex gap-5 mx-10 mt-8 lg:ml-10">
             <img
-              src="https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png"
+              src="https://openweathermap.org/img/wn/${
+                data.weather[0].icon
+              }@4x.png"
               alt=""
               class="h-[130px] w-[130px] lg:h-[250px] lg:w-[250px]"
             />
@@ -61,12 +124,16 @@ function getWeatherData(name, lat, lon, country) {
                 Today
               </p>
               <p class="text-sm lg:text-2xl font-semibold my-3 lg:mt-5 text-white">
-                ${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}
+                ${days[date.getDay()]} ${date.getDate()} ${
+        months[date.getMonth()]
+      } ${date.getFullYear()}
               </p>
               <p class="text-3xl lg:text-6xl font-extrabold my-3 lg:my-5 text-white">${(
                 data.main.temp - 273.15
               ).toFixed(2)} &deg;C</p>
-              <p class="text-xl lg:text-2xl font-bold text-white">${data.weather[0].description}</p>
+              <p class="text-xl lg:text-2xl font-bold text-white">${
+                data.weather[0].description
+              }</p>
             </div>
           </div>
           <div class="flex gap-8 mx-5 lg:gap-10 lg:mt-10 lg:ml-10">
@@ -78,14 +145,18 @@ function getWeatherData(name, lat, lon, country) {
               />
               <div>
                 <p class="font-bold text-sm lg:text-2xl text-white">Humidity</p>
-                <p class="font-bold text-xs lg:text-2xl text-white">${data.main.humidity} %</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${
+                  data.main.humidity
+                } %</p>
               </div>
             </div>
             <div class="flex gap-3 lg:gap-5 mt-10 lg:mr-5 items-center">
               <img src="./Img/icons/gauge.png" alt="" class="w-[20px] h-[20px] lg:h-[70px] lg:w-[70px]" />
               <div>
                 <p class="font-bold text-sm lg:text-2xl text-white">Pressure</p>
-                <p class="font-bold text-xs lg:text-2xl text-white">${data.main.pressure} hPA</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${
+                  data.main.pressure
+                } hPA</p>
               </div>
             </div>
             <div class="flex gap-3 lg:gap-5 mt-10 lg:mr-5 items-center">
@@ -96,7 +167,9 @@ function getWeatherData(name, lat, lon, country) {
               />
               <div>
                 <p class="font-bold text-sm lg:text-2xl text-white">Wind Speed</p>
-                <p class="font-bold text-xs lg:text-2xl text-white">${data.wind.speed} m/s</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${
+                  data.wind.speed
+                } m/s</p>
               </div>
             </div>
           </div>
@@ -110,8 +183,8 @@ function getWeatherData(name, lat, lon, country) {
               <div>
                 <p class="font-bold text-sm lg:text-2xl text-white">Feel Like</p>
                 <p class="font-bold text-xs lg:text-2xl text-white">${(
-                data.main.feels_like - 273.15
-              ).toFixed(2)}  &deg;C</p>
+                  data.main.feels_like - 273.15
+                ).toFixed(2)}  &deg;C</p>
               </div>
             </div>
             <div class="flex gap-5 mt-10 lg:mr-8">
@@ -164,7 +237,9 @@ function getWeatherData(name, lat, lon, country) {
 
           hoursForecastElements.innerHTML += `
             <div class="flex gap-8 mt-5 items-center">
-              <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@4x.png" alt="" width="100" height="100" />
+              <img src="https://openweathermap.org/img/wn/${
+                forecast.weather[0].icon
+              }@4x.png" alt="" width="100" height="100" />
               <p class="text-xl lg:text-2xl font-bold text-white">${(
                 forecast.main.temp - 273.15
               ).toFixed(2)}  &deg;C</p>
@@ -220,16 +295,18 @@ function getWeatherData(name, lat, lon, country) {
               alt=""
               class="w-[200px] h-[200px] lg:h-[300px] lg:w-[300px]"
             />
-            <p class="font-bold text-xl lg:text-3xl">${(avgTemp - 273.15).toFixed(
-              2
-            )} &deg;C</p>
+            <p class="font-bold text-xl lg:text-3xl">${(
+              avgTemp - 273.15
+            ).toFixed(2)} &deg;C</p>
           </div>
       `;
       });
+      displayWeatherChart(data);
     })
     .catch(() => {
       alert("Error fetching forecast data. Please try again later.");
     });
+
 }
 
 function getCityCoordinates() {
