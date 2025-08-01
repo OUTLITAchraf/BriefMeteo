@@ -47,74 +47,80 @@ function getWeatherData(name, lat, lon, country) {
       }
 
       todayWeatherElements.innerHTML = `
-          <h1 class="italic font-bold text-6xl text-[#FFD700] mt-12">
-            Weather ${name} , ${country}
+          <h1 class="mx-5 italic font-bold text-3xl lg:text-6xl text-yellow-400 mt-12">
+            Now ${name} , ${country}
           </h1>
-          <div class="flex gap-4 mt-8 ml-10">
-            <img src="https://openweathermap.org/img/wn/${
-              data.weather[0].icon
-            }@4x.png" alt="" width="300" height="300" />
-            <div class="ml-5 mt-5">
-              <h2 class="text-white text-5xl font-bold">Today</h2>
-              <p class="text-white text-2xl font-semibold mt-5">
-                ${days[date.getDay()]} ${date.getDate()} ${
-        months[date.getMonth()]
-      } ${date.getFullYear()}
+          <div class="flex gap-5 mx-10 mt-8 lg:ml-10">
+            <img
+              src="https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png"
+              alt=""
+              class="h-[150px] w-[150px] lg:h-[250px] lg:w-[250px]"
+            />
+            <div class="ml-5 lg:mt-5">
+              <p class="text-xl lg:text-2xl font-semibold lg:mt-5 text-white">
+                Today
               </p>
-              <p class="text-white text-6xl font-extrabold my-5">${(
+              <p class="text-sm lg:text-2xl font-semibold my-3 lg:mt-5 text-white">
+                ${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}
+              </p>
+              <p class="text-3xl lg:text-6xl font-extrabold my-3 lg:my-5 text-white">${(
                 data.main.temp - 273.15
-              ).toFixed(2)}&deg;C</p>
-              <p class="text-white text-2xl font-bold">${data.weather[0].description}</p>
+              ).toFixed(2)} &deg;C</p>
+              <p class="text-xl lg:text-2xl font-bold text-white">${data.weather[0].description}</p>
             </div>
           </div>
-          <div class="flex gap-10 mt-5 ml-10">
-            <div class="flex gap-5 mt-10 mr-5">
-              <img src="./Img/icons/humidity.png" alt="" width="70" height="70" />
-              <div>
-                <p class="text-white font-bold text-2xl">Humidity</p>
-                <p class="text-white font-bold text-2xl">${data.main.humidity} %</p>
-              </div>
-            </div>
-            <div class="flex gap-5 mt-10">
+          <div class="flex gap-8 mx-5 lg:gap-10 mt-5 lg:mt-10 lg:ml-10">
+            <div class="flex gap-3 lg:gap-5 mt-10 lg:mr-5 items-center">
               <img
-                src="./Img/icons/gauge.png"
+                src="./Img/icons/humidity.png"
                 alt=""
-                width="70"
-                height="70"
+                class="w-[20px] h-[20px] lg:h-[70px] lg:w-[70px]"
               />
               <div>
-                <p class="text-white font-bold text-2xl">Pressure</p>
-                <p class="text-white font-bold text-2xl">${data.main.pressure} hPA</p>
+                <p class="font-bold text-sm lg:text-2xl text-white">Humidity</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${data.main.humidity} %</p>
               </div>
             </div>
-            <div class="flex gap-5 mt-10 ml-5">
-              <img src="./Img/icons/wind.png" alt="" width="70" height="70" />
+            <div class="flex gap-3 lg:gap-5 mt-10 lg:mr-5 items-center">
+              <img src="./Img/icons/gauge.png" alt="" class="w-[20px] h-[20px] lg:h-[70px] lg:w-[70px]" />
               <div>
-                <p class="text-white font-bold text-2xl">Wind Speed</p>
-                <p class="text-white font-bold text-2xl">${data.wind.speed} m/s</p>
+                <p class="font-bold text-sm lg:text-2xl text-white">Pressure</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${data.main.pressure} hPA</p>
+              </div>
+            </div>
+            <div class="flex gap-3 lg:gap-5 mt-10 lg:mr-5 items-center">
+              <img
+                src="./Img/icons/wind.png"
+                alt=""
+                class="w-[20px] h-[20px] lg:h-[70px] lg:w-[70px]"
+              />
+              <div>
+                <p class="font-bold text-sm lg:text-2xl text-white">Wind Speed</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${data.wind.speed} m/s</p>
               </div>
             </div>
           </div>
-          <div class="flex gap-10 mt-10 ml-10">
+          <div class="flex gap-8 mx-5 lg:gap-10 lg:mt-10 lg:ml-10">
             <div class="flex gap-5 mt-10 mr-5">
               <img
                 src="./Img/icons/sunrise.png"
                 alt=""
-                width="70"
-                height="70"
+                class="w-[25px] h-[25px] lg:h-[70px] lg:w-[70px]"
               />
               <div>
-                <p class="text-white font-bold text-2xl">Sunrise</p>
-                <p class="text-white font-bold text-2xl">${formatTime(
+                <p class="font-bold text-sm lg:text-2xl text-white">Sunrise</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${formatTime(
                   data.sys.sunrise
                 )}</p>
               </div>
             </div>
             <div class="flex gap-5 mt-10">
-              <img src="./Img/icons/sunset.png" alt="" width="70" height="70" />
+              <img src="./Img/icons/sunset.png" alt="" class="w-[30px] h-[30px] lg:h-[70px] lg:w-[70px]"/>
               <div>
-                <p class="text-white font-bold text-2xl">Sunset</p>
-                <p class="text-white font-bold text-2xl">${formatTime(data.sys.sunset)}</p>
+                <p class="font-bold text-sm lg:text-2xl text-white">Sunset</p>
+                <p class="font-bold text-xs lg:text-2xl text-white">${formatTime(
+                  data.sys.sunset
+                )}</p>
               </div>
             </div>
           </div>
@@ -145,13 +151,11 @@ function getWeatherData(name, lat, lon, country) {
 
           hoursForecastElements.innerHTML += `
             <div class="flex gap-8 mt-5 items-center">
-              <img src="https://openweathermap.org/img/wn/${
-                forecast.weather[0].icon
-              }@4x.png" alt="" width="100" height="100" />
-              <p class="text-2xl text-white font-bold">${(
+              <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@4x.png" alt="" width="100" height="100" />
+              <p class="text-2xl font-bold text-white">${(
                 forecast.main.temp - 273.15
-              ).toFixed(2)} &deg;C</p>
-              <p class="text-2xl text-white font-bold">${date.getHours()}:00</p>
+              ).toFixed(2)}  &deg;C</p>
+              <p class="text-2xl font-bold text-white">${date.getHours()}:00</p>
             </div>
           `;
         }
@@ -194,13 +198,19 @@ function getWeatherData(name, lat, lon, country) {
         let dayName = days[date.getDay()];
 
         fiveDaysForecastElements.innerHTML += `
-         <div class="bg-blue-500 text-white text-center py-5 px-3 rounded-4xl shadow-lg border-black border-2">
-            <p class="font-bold text-3xl">${dayName}</p>
-            <img src="https://openweathermap.org/img/wn/${icon}@4x.png" alt="" width="300" height="300" />
-            <p class="font-bold text-3xl">${(avgTemp - 273.15).toFixed(
+        <div
+            class="bg-blue-500 text-white text-center justify-items-center py-3 lg:py-5 lg:px-3 mx-20 lg:mx-0 my-5 lg:my-0 rounded-4xl shadow-lg border-black border-2"
+          >
+            <p class="font-bold text-2xl lg:text-3xl">${dayName}</p>
+            <img
+              src="https://openweathermap.org/img/wn/${icon}@4x.png"
+              alt=""
+              class="w-[200px] h-[200px] lg:h-[300px] lg:w-[300px]"
+            />
+            <p class="font-bold text-xl lg:text-3xl">${(avgTemp - 273.15).toFixed(
               2
-            )}&deg;C</p>
-        </div>
+            )} &deg;C</p>
+          </div>
       `;
       });
     })
